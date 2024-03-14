@@ -1,0 +1,42 @@
+definitions:
+  models.User:
+    properties:
+      dob:
+        type: string
+      login:
+        type: string
+      name:
+        type: string
+      reg_date:
+        type: string
+      surname:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /create:
+    post:
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        "404":
+          description: Not Found
+      summary: Создание новой записи Пользователя
+      tags:
+      - Пользователь (users)
+  /read:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        "404":
+          description: Not Found
+      summary: Получение пользователя по логину
+      tags:
+      - Пользователь (users)
+swagger: "2.0"
