@@ -5,6 +5,7 @@ import (
 	"ASCorpImportantDates/internal/config"
 	"ASCorpImportantDates/internal/http_server/handlers"
 	"ASCorpImportantDates/internal/lib/logger"
+	"ASCorpImportantDates/internal/lib/mw"
 	"ASCorpImportantDates/internal/storage/sqlite"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -26,7 +27,7 @@ func main() {
 
 	// TODO: init logger: slog
 	log := setupLogger(cfg.Env)
-	log.Info("starting about-me", slog.String("env", cfg.Env))
+	log.Info("starting ASCorpImportantDates", slog.String("env", cfg.Env))
 	log.Debug("debug messages")
 
 	// TODO: init storage: SQLite
@@ -36,12 +37,10 @@ func main() {
 		os.Exit(1)
 	}
 
-	_ = storage
-
 	// TODO: init router: gin
 	router := gin.Default()
 
-	router.POST("auth")
+	router.POST("auth", handlers.SignIn(storage))
 	router.POST("reg", handlers.CreateUser(storage))
 
 	api := router.Group("api")
@@ -51,6 +50,7 @@ func main() {
 			users := v1.Group("users")
 			{
 				users.GET("read", handlers.ReadUser("alphocap", storage))
+				users.GET("all", mw.CheckHeader("iva"), handlers.ReadUsers(storage))
 			}
 		}
 	}

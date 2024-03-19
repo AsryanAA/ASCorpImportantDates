@@ -22,3 +22,11 @@ func ReadUser(login string, storage *sqlite.Storage) (models.User, error) {
 	}
 	return user, nil
 }
+
+func ReadUsers(storage *sqlite.Storage) ([]models.User, error) {
+	users, err := storage.ReadUsers()
+	if err != nil {
+		return users, err
+	}
+	return users, nil
+}

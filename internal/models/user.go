@@ -7,3 +7,7 @@ type User struct {
 	DOB     string `json:"dob"`
 	RegDate string `json:"reg_date"`
 }
+
+type UserAuth struct {
+	Login string `json:"login"`
+}

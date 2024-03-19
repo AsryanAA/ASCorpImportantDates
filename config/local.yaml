@@ -1,0 +1,7 @@
+env: "local" # local, dev, prod
+storage_path: "./storage/sqlite.db"
+http_server:
+  address: "localhost"
+  port: 8016
+  timeout: 4s
+  idle_timeout: 60s
