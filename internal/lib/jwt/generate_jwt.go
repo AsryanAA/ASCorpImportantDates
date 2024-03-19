@@ -36,3 +36,14 @@ func GenerateJWT(user models.User) (string, error) {
 
 	return tokenString, nil
 }
+
+func CheckValidJWT(token string) bool {
+	var userClaim Claims
+	_, err := jwt.ParseWithClaims(token, &userClaim, func(token *jwt.Token) (interface{}, error) {
+		return jwtKey, nil
+	})
+	if err != nil {
+		return false
+	}
+	return true
+}

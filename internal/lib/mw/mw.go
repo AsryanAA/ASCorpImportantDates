@@ -30,6 +30,9 @@ func CheckHeader(login string) gin.HandlerFunc {
 			return
 		}
 
+		// TODO доделать функционал
+		jwt.CheckValidJWT(token)
+
 		// TODO узнать до какого символа должно быть совпадение
 		if token[:100] != checkToken[:100] {
 			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
